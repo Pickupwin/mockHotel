@@ -1,0 +1,44 @@
+import (
+    . "std/faas"
+)
+
+@function gensearch {
+    runtime = "python"
+    codeDir = "./code"
+    handler = "index.handler"
+}
+
+
+@application gensearch {
+    functions = [gensearch]
+    defaultProvider = PKU
+    providers= [PKU]
+    inputExamples = [
+        {
+            value = {
+                n = 100
+                k = 10
+                query_x = 10
+                query_y = 20
+            }
+        },
+        {
+            value = {
+                n = 100
+                k = 5
+                query_x = 20
+                query_y = 20
+            }
+        }
+    ]
+}
+
+@provider PKU {
+    kind = "pku"
+    invoke = {
+        repeat = '1'
+        launch = 'tradition'
+        transmode = "allTCP"
+    }
+    registry = "192.168.1.76:5000"
+}
