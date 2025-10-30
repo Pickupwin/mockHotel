@@ -43,7 +43,6 @@
 </template>
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import axios from 'axios'
 const props = defineProps<{ query: string }>()
 interface HotelItem {
   name: string
@@ -54,12 +53,24 @@ interface HotelItem {
 const hotels = ref<HotelItem[]>([])
 const loading = ref(false)
 const popupMessage = ref('')
+
+import { ftInvoke } from '../api/ftInvoke'
+
 async function fetchHotels(query: string) {
   if (!query) { hotels.value = []; return }
   loading.value = true
   try {
-    const resp = await axios.post('http://localhost:8000/invoke', { location: query })
-    const list = Array.isArray(resp.data) ? resp.data : []
+    const resp = await ftInvoke({
+      app_id: 123,
+      path: '/root/sbw/mockHotel/backend/Hotel-DSL',
+      name: query
+    })
+    console.log('Response from ftInvoke:', resp.data)
+    const list = [
+      { name: "Sunrise Hotel", price: 129.0, rating: 4.5 },
+      { name: "City Center Inn", price: 89.0, rating: 4.1 },
+      { name: "Lakeside Resort", price: 159.0, rating: 4.7 },
+    ];
     hotels.value = list.map((h: any) => ({
       name: String(h.name ?? ''),
       price: Number(h.price ?? 0),
