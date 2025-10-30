@@ -1,11 +1,10 @@
 <template>
-  <HotelBooking />
+  <NavBar />
+  <main style="padding-top: 64px"><router-view /></main>
 </template>
-
 <script setup lang="ts">
-import HotelBooking from './components/HotelBooking.vue'
+import NavBar from './components/NavBar.vue'
 </script>
-
 <style>
 body {
   margin: 0;
