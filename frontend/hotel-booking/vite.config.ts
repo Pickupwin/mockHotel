@@ -14,6 +14,10 @@ export default defineConfig({
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
+      '/ft': {
+        target: 'http://8.130.87.93:8328',
+        changeOrigin: true,
+      },
     },
   },
 })
