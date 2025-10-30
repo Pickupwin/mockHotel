@@ -7,10 +7,10 @@ import uuid
 def hotelSearch(frt: FaasitRuntime):
     _in = frt.input()
 
-    n = _in["n"]
-    k = _in["k"]
-    query_x = _in["query_x"]
-    query_y = _in["query_y"]
+    n = _in.get("n", 1000)
+    k = _in.get("k", 10)
+    query_x = _in.get("query_x", 10)
+    query_y = _in.get("query_y", 20)
     query = (query_x, query_y)
 
     unique_id = uuid.uuid4()

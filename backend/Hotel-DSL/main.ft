@@ -2,15 +2,15 @@ import (
     . "std/faas"
 )
 
-@function gensearch {
+@function hotelsearch01 {
     runtime = "python"
     codeDir = "./code"
     handler = "index.handler"
 }
 
 
-@application gensearch {
-    functions = [gensearch]
+@application hotelsearch01 {
+    functions = [hotelsearch01]
     defaultProvider = PKU
     providers= [PKU]
     inputExamples = [
