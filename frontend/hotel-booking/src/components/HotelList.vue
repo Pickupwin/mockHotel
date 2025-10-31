@@ -8,10 +8,10 @@
         <table class="hotel-table">
           <thead>
             <tr>
-              <th>Hotel</th>
-              <th class="right">Price ($/night)</th>
-              <th class="center">Rating</th>
-              <th class="center">Action</th>
+              <th>酒店</th>
+              <th class="right">价格（元/晚）</th>
+              <th class="center">评分</th>
+              <th class="center">预定</th>
             </tr>
           </thead>
           <tbody>
@@ -19,7 +19,7 @@
               <td>
                 <span class="hotel-name">{{ hotel.name }}</span>
               </td>
-              <td class="right">${{ hotel.price.toFixed(2) }}</td>
+              <td class="right">¥{{ hotel.price.toFixed(2) }}</td>
               <td class="center"><span class="rating-star">★</span>{{ hotel.rating.toFixed(1) }}</td>
               <td class="center">
                 <button
@@ -28,7 +28,7 @@
                   :disabled="hotel.booked"
                   :class="hotel.booked ? 'booked' : ''"
                 >
-                  {{ hotel.booked ? 'Booked' : 'Book' }}
+                  {{ hotel.booked ? '预定成功' : '预定' }}
                 </button>
               </td>
             </tr>
@@ -66,12 +66,59 @@ async function fetchHotels(query: string) {
       name: "hotel"
     })
     console.log('Response from ftInvoke:', resp.data)
-    const list = [
-      { name: "Sunrise Hotel", price: 129.0, rating: 4.5 },
-      { name: "City Center Inn", price: 89.0, rating: 4.1 },
-      { name: "Lakeside Resort", price: 159.0, rating: 4.7 },
-    ];
-    hotels.value = list.map((h: any) => ({
+
+
+    
+    // 硬编码的响应数据
+    const retval = {
+      'hotelsearch01': {
+        status: 'Ok',
+        data: {
+          points: [
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [11.005425938142121, 20.15904998047844], 'value': 79.34284414975781},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [9.760065447306577, 22.716869007218076], 'value': 73.26373347519274},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [12.342473222449968, 22.321929696014553], 'value': 70.4982983824738},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [7.408477610539155, 22.058459373193717], 'value': 46.984229202369754},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [6.024882106569196, 19.065888540728803], 'value': 77.166834861537},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [10.053130612931604, 15.3799278505507], 'value': 82.73747215278824},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [15.108092100766711, 20.473399286501405], 'value': 72.57983997782196},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [15.886876842182552, 19.72491917778273], 'value': 26.558865994159888},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [13.296712090357499, 15.013577190813532], 'value': 92.57094721099838},
+            {'brand': 'd3cab088-a6d3-4522-b07f-9b46baf2afb5', 'coords': [8.162750327878598, 13.319991305086287], 'value': 95.85538040075944}
+          ]
+        }
+      }
+    }
+
+    // 品牌列表
+    const brands = ["汉庭", "希尔顿", "如家", "假日", "7天", "全季", "晋江", "万豪", "港丽", "凯悦"]
+    // 修饰列表
+    const diffs = ["南口", "东门", "北门", "西街", "东街", "南门", "西门", "北口", "东口", "西口", "南街", "北街"]
+
+    
+    // 从响应数据中生成酒店列表
+    const points = retval.hotelsearch01.data.points
+    const list = points.map((point, index) => {
+      // 随机选择品牌
+      const randomBrand = brands[Math.floor(Math.random() * brands.length)]
+      // 生成酒店名称
+      const name = `${randomBrand}酒店（${query}${diffs[index]}店）`
+      // 将value转换为五分制评分（假设原value是百分制）
+      const rating = (point.value / 20).toFixed(1)
+      // 生成随机价格（100-1000元之间）
+      const price = Math.floor(Math.random() * 900) + 100
+      
+      return {
+        name,
+        price,
+        rating: parseFloat(rating),
+        booked: false
+      }
+    })
+
+    const sortedList = list.sort((a, b) => b.rating - a.rating)
+
+    hotels.value = sortedList.map((h: any) => ({
       name: String(h.name ?? ''),
       price: Number(h.price ?? 0),
       rating: Number(h.rating ?? 0),
@@ -86,7 +133,7 @@ async function fetchHotels(query: string) {
 }
 function book(hotel: HotelItem) {
   hotel.booked = true
-  showPopup('Booking successful!')
+  showPopup('预定成功')
 }
 function showPopup(msg: string) {
   popupMessage.value = msg
