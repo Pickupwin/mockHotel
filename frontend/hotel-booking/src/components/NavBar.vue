@@ -6,6 +6,7 @@
     <div class="nav-right">
       <router-link to="/" exact-active-class="active" class="nav-link">Home</router-link>
       <router-link to="/hotels" exact-active-class="active" class="nav-link">Hotels</router-link>
+      <router-link to="/technical" exact-active-class="active" class="nav-link">技术效果</router-link>
       <router-link to="/about" exact-active-class="active" class="nav-link">About</router-link>
     </div>
   </nav>
