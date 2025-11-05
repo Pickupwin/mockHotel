@@ -23,7 +23,7 @@ import (
 }
 
 
-@application hotelsearch01 {
+@application hotelsearchv2 {
     workflow = hotelworkflow
     defaultProvider = PKU
     providers= [PKU, fast_start]
@@ -48,6 +48,17 @@ import (
 }
 
 @provider PKU {
+    kind = "pku"
+    invoke = {
+        repeat = '1'
+        launch = 'tradition'
+        transmode = "allTCP"
+        redis_preload_folder = "./data"
+    }
+    registry = "192.168.1.76:5000"
+}
+
+@provider PKU_dist {
     kind = "pku"
     build = {
         image = "cuda"
