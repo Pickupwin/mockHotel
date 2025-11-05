@@ -9,10 +9,7 @@ def hotelSearch(frt: FaasitRuntime):
 
     n = _in.get("n", 1000)
     k = _in.get("k", 10)
-    query_x = _in.get("query_x", 10)
-    query_y = _in.get("query_y", 20)
-    query = (query_x, query_y)
-
+    
     unique_id = uuid.uuid4()
     random.seed(unique_id)
     points = []
@@ -22,6 +19,10 @@ def hotelSearch(frt: FaasitRuntime):
             random.uniform(0, 100)   # y
         )
         points.append(point)
+    
+    query_x = _in.get("query_x", 10)
+    query_y = _in.get("query_y", 20)
+    query = (query_x, query_y)
     
     def euclidean_distance(p1, p2):
         return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2

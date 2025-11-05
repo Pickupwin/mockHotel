@@ -26,7 +26,7 @@ import (
 @application hotelsearch01 {
     workflow = hotelworkflow
     defaultProvider = PKU
-    providers= [PKU]
+    providers= [PKU, fast_start]
     inputExamples = [
         {
             value = {
@@ -66,5 +66,16 @@ import (
 
     deploy = {
         worker = "distributed_worker"
+    }
+}
+
+@provider fast_start {
+    kind = "pku"
+    deploy = {
+        startMode = 'fast-start'
+    }
+    invoke = {
+        restore_mode = "parallel"
+        restore_num = "100"
     }
 }
