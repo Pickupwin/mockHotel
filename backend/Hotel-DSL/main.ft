@@ -87,6 +87,7 @@ import (
     }
     invoke = {
         restore_mode = "parallel"
-        restore_num = "3"
+        restore_num = "100"
+        vcpu = "3"
     }
 }
