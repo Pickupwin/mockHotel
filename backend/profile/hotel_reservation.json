@@ -1,0 +1,37 @@
+[
+  {
+    "app": "hotelsearchv3",
+    "config": "1-1000-0",
+    "latency": 0.254,
+    "cost": 0.008466666666666667,
+    "profile": ""
+  },
+  {
+    "app": "hotelsearchv3",
+    "config": "1-2000-0",
+    "latency": 0.131,
+    "cost": 0.008733333333333334,
+    "profile": ""
+  },
+  {
+    "app": "hotelsearchv3",
+    "config": "1-3000-0",
+    "latency": 0.115,
+    "cost": 0.011500000000000002,
+    "profile": ""
+  },
+  {
+    "app": "hotelsearchv3",
+    "config": "1-4000-0",
+    "latency": 0.112,
+    "cost": 0.014933333333333333,
+    "profile": ""
+  },
+  {
+    "app": "hotelsearchv3",
+    "config": "1-5000-0",
+    "latency": 0.1,
+    "cost": 0.016666666666666666,
+    "profile": ""
+  }
+]
