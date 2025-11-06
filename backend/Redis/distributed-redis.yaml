@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: redis-__replica-id__
+  name: redis-pod-__replica-id__
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: __node-name__
+  containers:
+  - args:
+    - --port
+    - '6379'
+    - --requirepass
+    - 293r9vfT7dfa&^
+    image: redis
+    imagePullPolicy: IfNotPresent
+    name: redis
+  nodeSelector:
+    redis: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service-__replica-id__
+spec:
+  externalIPs:
+  - 10.0.0.100
+  ports:
+  - port: 6379
+  selector:
+    app: redis-__replica-id__
