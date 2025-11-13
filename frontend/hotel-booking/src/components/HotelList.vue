@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="hotel in hotels" :key="hotel.name" :class="{ 'zebra': $index % 2 === 1 }">
+            <tr v-for="(hotel, index) in hotels" :key="hotel.name" :class="{ 'zebra': index % 2 === 1 }">
               <td>
                 <span class="hotel-name">{{ hotel.name }}</span>
               </td>
@@ -43,7 +43,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-const props = defineProps<{ query: string }>()
+const props = defineProps<{ query: string, provider?: string }>()
 interface HotelItem {
   name: string
   price: number
@@ -64,7 +64,7 @@ async function fetchHotels(query: string) {
       app_id: 13,
       path: '/root/sbw/mockHotel/backend/Hotel-DSL',
       name: "HotelReserve",
-      provider: "fast_start"
+      provider: props.provider || "fast_start"
     })
     console.log('Response from ftInvoke:', resp.data)
 

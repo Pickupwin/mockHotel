@@ -91,3 +91,15 @@ import (
         vcpu = "3"
     }
 }
+
+@provider baseline_start {
+    kind = "pku"
+    deploy = {
+        startMode = 'fast-start'
+    }
+    invoke = {
+        restore_mode = "sequential"
+        restore_num = "100"
+        vcpu = "3"
+    }
+}

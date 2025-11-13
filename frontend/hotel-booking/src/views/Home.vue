@@ -2,7 +2,11 @@
   <div class="home-page">
     <section class="intro-section">
       <h1 class="headline">Find Your Perfect Stay</h1>
-      <SearchBox :placeholder="'Where do you want to go?'" @search="onSearch" />
+      <SearchBox 
+        :placeholder="'Where do you want to go?'" 
+        @search="onSearch" 
+        @mode-change="onModeChange"
+      />
     </section>
     <RoomPreview />
   </div>
@@ -11,9 +15,27 @@
 import { useRouter } from 'vue-router'
 import SearchBox from '../components/SearchBox.vue'
 import RoomPreview from '../components/RoomPreview.vue'
+
 const router = useRouter()
-function onSearch(val: string) {
-  if (val) router.push({ path: '/hotels', query: { q: val } })
+// 存储当前的启动模式
+let currentProvider = 'fast_start' // 默认为快速启动
+
+// 处理模式变更
+function onModeChange(provider: string) {
+  currentProvider = provider
+}
+
+// 处理搜索事件
+function onSearch(event: { value: string, provider: string }) {
+  if (event.value) {
+    router.push({
+      path: '/hotels', 
+      query: { 
+        q: event.value,
+        provider: event.provider || currentProvider 
+      } 
+    })
+  }
 }
 </script>
 <style scoped>

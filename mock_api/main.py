@@ -107,7 +107,7 @@ def parse_plot_log(file_path: str) -> PlotData:
     except Exception as e:
         print(f"解析日志文件失败: {e}")
         # 返回默认数据作为fallback
-        if "para" in file_path or restore_mode == "parallel":
+        if "para" in file_path:
             return PlotData(
                 x=[0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 26, 35, 36, 37, 38, 44, 45, 46, 47, 49, 50, 51, 62, 66, 67, 68, 80, 81, 82, 83, 84, 85],
                 y=[5, 10, 16, 20, 25, 27, 30, 34, 38, 39, 40, 45, 49, 50, 52, 54, 56, 57, 62, 66, 69, 71, 73, 74, 78, 80, 87, 90, 94, 96, 98, 100]
@@ -145,11 +145,18 @@ def invoke(req: InvokeRequest) -> List[Hotel]:
     log_file = "/app/output/HotelReserve-baseline/spilot.log"
     with open(log_file, "w", encoding="utf-8") as f:
         pass
-
-    write_log_message("Fast start toggled, starting instances from snapshots...")
-
-    # 执行指定的命令
-    cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/sbw/mockHotel/backend/Hotel-DSL;ft invoke -p fast_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
+    
+    # 判断是否使用快速启动
+    is_fast_start = req.provider == "fast_start"
+    
+    if is_fast_start:
+        # 快速启动模式
+        write_log_message("Fast start toggled, initiating high-performance instance deployment from snapshots...")
+        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/sbw/mockHotel/backend/Hotel-DSL;ft invoke -p fast_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
+    else:
+        # 普通启动模式
+        write_log_message("Using default start approach...")
+        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/sbw/mockHotel/backend/Hotel-DSL;ft invoke -p baseline_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
     
     try:
         # 使用bash执行命令，因为包含source命令
@@ -168,7 +175,10 @@ def invoke(req: InvokeRequest) -> List[Hotel]:
             # 可以选择记录日志或进行其他错误处理
         else:
             print("命令执行成功")
-            write_log_message("Fast start completed successfully. Check /etc/mitosis for results.")
+            if is_fast_start:
+                write_log_message("Fast start completed successfully. Check /etc/mitosis for results.")
+            else:
+                write_log_message("Baseline start completed successfully.")
             
     except subprocess.TimeoutExpired:
         print("命令执行超时")
