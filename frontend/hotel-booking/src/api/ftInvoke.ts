@@ -9,7 +9,7 @@ export function ftInvoke(body: {
   provider?: string,
 }) {
   return axios({
-    url: '/ft/invoke',
+    url: '/invoke',
     method: 'post',
     data: body
   })

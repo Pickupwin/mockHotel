@@ -7,11 +7,15 @@ export default defineConfig({
   server: {
     proxy: {
       '/hotel-search': {
-        target: 'http://127.0.0.1:8000',
+        target: 'http://127.0.0.1:5878',
         changeOrigin: true,
       },
       '/hotel-reserve': {
-        target: 'http://127.0.0.1:8000',
+        target: 'http://127.0.0.1:5878',
+        changeOrigin: true,
+      },
+      '/invoke': {
+        target: 'http://127.0.0.1:5878',
         changeOrigin: true,
       },
       '/ft': {
