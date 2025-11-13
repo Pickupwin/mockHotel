@@ -6,6 +6,7 @@
       @search="onSearch" 
       @mode-change="onModeChange"
       :default-mode="(route.query.provider as string) === 'fast_start' ? 'fast' : 'normal'"
+      :show-toggle="true"
     />
     <HotelList :query="searchVal" :provider="currentProvider" />
   </div>

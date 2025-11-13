@@ -4,7 +4,7 @@
       <input type="text" v-model="search" :placeholder="placeholder" />
       <button type="submit">Search</button>
     </form>
-    <div class="toggle-container">
+    <div class="toggle-container" v-if="showToggle">
       <span class="toggle-label">启动模式:</span>
       <label class="toggle-switch">
         <input type="checkbox" v-model="isFastStart" @change="onModeChange">
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { defineEmits, ref, watch } from 'vue'
 const emit = defineEmits(['search', 'mode-change'])
-const props = defineProps<{ placeholder?: string, initial?: string, defaultMode?: 'fast' | 'normal' }>()
+const props = defineProps<{ placeholder?: string, initial?: string, defaultMode?: 'fast' | 'normal', showToggle?: boolean }>()
 const search = ref(props.initial || '')
 const isFastStart = ref(props.defaultMode === 'fast' || true) // 默认为快速启动
 

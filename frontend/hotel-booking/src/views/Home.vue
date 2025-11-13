@@ -5,6 +5,7 @@
       <SearchBox 
         :placeholder="'Where do you want to go?'" 
         @search="onSearch"
+        :show-toggle="false"
       />
     </section>
     <RoomPreview />
