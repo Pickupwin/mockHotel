@@ -152,11 +152,11 @@ def invoke(req: InvokeRequest) -> List[Hotel]:
     if is_fast_start:
         # 快速启动模式
         write_log_message("Fast start toggled, initiating high-performance instance deployment from snapshots...")
-        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/sbw/mockHotel/backend/Hotel-DSL;ft invoke -p fast_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
+        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/projects/HotelReserve;ft invoke -p fast_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
     else:
         # 普通启动模式
         write_log_message("Using default start approach...")
-        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/sbw/mockHotel/backend/Hotel-DSL;ft invoke -p baseline_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
+        cmd = "source ~/faasit/demo-202405/venv/bin/activate;cd /root/projects/HotelReserve;ft invoke -p baseline_start >> /app/output/HotelReserve-baseline/spilot.log 2> /dev/null"
     
     try:
         # 使用bash执行命令，因为包含source命令

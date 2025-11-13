@@ -62,7 +62,7 @@ async function fetchHotels(query: string) {
   try {
     const resp = await ftInvoke({
       app_id: 13,
-      path: '/root/sbw/mockHotel/backend/Hotel-DSL',
+      path: '/root/projects/HotelReserve',
       name: "HotelReserve",
       provider: props.provider || "fast_start"
     })
