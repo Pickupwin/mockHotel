@@ -102,7 +102,7 @@ function drawChart() {
   // 清除画布
   ctx.clearRect(0, 0, chartCanvas.value.width, chartCanvas.value.height)
   
-  const margin = { top: 20, right: 20, bottom: 40, left: 60 }
+  const margin = { top: 20, right: 220, bottom: 40, left: 60 }
   const width = chartCanvas.value.width - margin.left - margin.right
   const height = chartCanvas.value.height - margin.top - margin.bottom
   
@@ -131,7 +131,7 @@ function drawChart() {
   // 绘制数据
   if (quickStartData.value) {
     ctx.strokeStyle = '#10b981' // 绿色表示快速启动
-    ctx.lineWidth = 2.5
+    ctx.lineWidth = 2
     drawLine(ctx, quickStartData.value, margin, width, height, globalMaxX, globalMaxY)
   }
   
