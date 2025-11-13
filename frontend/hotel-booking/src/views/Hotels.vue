@@ -25,9 +25,13 @@ const currentProvider = ref((route.query.provider as string) || 'fast_start')
 // 处理模式变更
 function onModeChange(provider: string) {
   currentProvider.value = provider
-  // 更新URL参数但不刷新页面
-  const query = { ...route.query, provider }
-  if (!provider) delete query.provider
+  // 重置搜索结果
+  searchVal.value = ''
+  // 更新URL参数但不刷新页面 - 只保留provider参数，移除搜索查询
+  const query: any = {}
+  if (provider) {
+    query.provider = provider
+  }
   router.replace({ query })
 }
 

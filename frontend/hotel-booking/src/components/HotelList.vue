@@ -64,7 +64,7 @@ async function fetchHotels(query: string) {
       app_id: 13,
       path: '/root/projects/HotelReserve',
       name: "HotelReserve",
-      provider: props.provider || "fast_start"
+      provider: props.provider || "baseline_start"
     })
     console.log('Response from ftInvoke:', resp.data)
 
