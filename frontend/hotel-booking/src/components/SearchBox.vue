@@ -33,11 +33,6 @@ function onSubmit() {
   emit('search', { value: search.value.trim(), provider: isFastStart.value ? 'fast_start' : '' })
 }
 
-// 组件挂载时发出初始模式
-import { onMounted } from 'vue'
-onMounted(() => {
-  onModeChange()
-})
 </script>
 <style scoped>
 .search-container {
